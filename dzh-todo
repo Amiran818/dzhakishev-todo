@@ -6,9 +6,10 @@
 #   dzh-todo add ТЕКСТ     добавить задачу
 #   dzh-todo list          вывести список: невыполненные и выполненные
 #   dzh-todo done N        отметить задачу N выполненной
+#   dzh-todo count         число невыполненных задач
 # Без параметров - диалоговый режим (утилита dialog).
 
-VERSION=1.0
+VERSION=1.1
 CONF_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/dzh-todo
 DATA=$CONF_DIR/tasks          # строки вида «0|текст» или «1|текст»
 TITLE="Список задач dzh-todo $VERSION"
@@ -42,6 +43,11 @@ done_task() {
     fi
     sed -i -E "${1}s/^0\|/1|/" "$DATA"
     echo "выполнено: $1"
+}
+
+count_tasks() {
+    # grep -c печатает 0 и при отсутствии совпадений
+    grep -c '^0|' "$DATA" || true
 }
 
 # ---------- диалоговый режим ----------
@@ -87,6 +93,7 @@ case "${1:-}" in
     add)   shift; add_task "$*" ;;
     list)  list_tasks ;;
     "done")  done_task "${2:-}" ;;
+    count) count_tasks ;;
     -v|--version) echo "dzh-todo $VERSION" ;;
-    *)     echo "Использование: dzh-todo [add ТЕКСТ | list | done N]" >&2; exit 1 ;;
+    *)     echo "Использование: dzh-todo [add ТЕКСТ | list | done N | count]" >&2; exit 1 ;;
 esac

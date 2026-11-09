@@ -1,5 +1,5 @@
 Name: dzhakishev-todo
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: To-do list shell script with dialog interface (lab 4)
@@ -22,5 +22,8 @@ install -D -m 0755 %SOURCE0 %buildroot%_bindir/dzh-todo
 %_bindir/dzh-todo
 
 %changelog
+* Mon Nov 09 2026 Amir Dzhakishev <dzhakishev@altlinux.org> 1.1-alt1
+- Added "count" command: number of unfinished tasks.
+
 * Mon Nov 09 2026 Amir Dzhakishev <dzhakishev@altlinux.org> 1.0-alt1
 - Initial build
